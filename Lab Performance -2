@@ -10,3 +10,163 @@ Give examples demonstrating the use of this to refer to instance variables and m
 Task-2: 
 a.	Recall the basic principles of exception handling in Java, give example of try-catch blocks and the handling of checked exception. 
 b.  Write a program to demonstrate Interface and implements multiple interface in a java.
+
+
+---------X---------X---------ANSWER--------X---------X----------
+
+TASK 1
+1.In Java, the super keyword is used to refer to the superclass of the current object instance. It can be used to access superclass methods, fields, or
+constructors. The super keyword is particularly useful in scenarios where the subclass needs to override a superclass method but still needs to call the 
+superclass method explicitly. Similarly, it's useful when a subclass needs to access superclass members that are hidden by the subclass's members.
+
+CODE
+class Vehicle {
+    String brand;
+
+    Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    void display() {
+        System.out.println("Brand: " + brand);
+    }
+}
+
+class Car extends Vehicle {
+    int year;
+
+    Car(String brand, int year) {
+        super(brand); // invoking superclass constructor
+        this.year = year;
+    }
+
+    void display() {
+        super.display(); // calling superclass method
+        System.out.println("Year: " + year);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car car = new Car("Toyota", 2022);
+        car.display(); // Output: Brand: Toyota
+                      //         Year: 2022
+    }
+}
+
+
+2.In Java, the this keyword is a reference to the current object instance. It can be used to refer to instance variables, instance methods, 
+or to invoke one constructor from another in the same class. Unlike super, which refers to the superclass, this refers to the current class instance.
+
+CODE
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name; // referring to instance variable
+        this.age = age;   // referring to instance variable
+    }
+
+    void display() {
+        System.out.println("Name: " + this.name); // referring to instance variable
+        System.out.println("Age: " + this.age);   // referring to instance variable
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Person person = new Person("John", 30);
+        person.display(); // Output: Name: John
+                          //         Age: 30
+    }
+}
+
+CODE
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name; // referring to instance variable
+        this.age = age;   // referring to instance variable
+    }
+
+    void setName(String name) {
+        this.name = name; // referring to instance variable
+    }
+
+    void display(String name) {
+        System.out.println("Name: " + this.name); // referring to instance variable
+        System.out.println("Age: " + age);        // age is referred without this (implicitly referring to instance variable)
+        System.out.println("Parameter Name: " + name); // referring to method parameter
+    }
+}
+
+
+TASK 2
+
+1. CODE
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        try {
+            File file = new File("nonexistentfile.txt");
+            Scanner scanner = new Scanner(file);
+            String firstLine = scanner.nextLine();
+            System.out.println("First line of file: " + firstLine);
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found!");
+            // You can add more specific error handling here if needed.
+        }
+    }
+}
+
+2. CODE
+interface Vehicle {
+    void start();
+    void stop();
+}
+
+interface AirConditioned {
+    void turnOnAC();
+    void turnOffAC();
+}
+
+class Car implements Vehicle, AirConditioned {
+    @Override
+    public void start() {
+        System.out.println("Car started.");
+    }
+
+    @Override
+    public void stop() {
+        System.out.println("Car stopped.");
+    }
+
+    @Override
+    public void turnOnAC() {
+        System.out.println("AC turned on.");
+    }
+
+    @Override
+    public void turnOffAC() {
+        System.out.println("AC turned off.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Car myCar = new Car();
+        myCar.start();
+        myCar.turnOnAC();
+        myCar.stop();
+        myCar.turnOffAC();
+    }
+}
+
+
